@@ -1,19 +1,20 @@
 ```cpp
-#include <memory>
+#include <ranges>
+#include <limits>
 
-struct Us {
-    ~Us();
+struct Her {
+    struct Light {} light;
+    struct Calm  {} calm;
+    struct Music {} music;
 };
 
-Us::~Us() {}
+static_assert(std::numeric_limits<double>::has_infinity);
 
 int main() {
-    auto her = std::weak_ptr<Her>{};
+    auto [light, calm, music] = Her{};
 
-    if (auto she = her.lock()) {
-        she->read(this_letter);
+    for (auto reason : std::views::iota(1)) {
+        ;
     }
-
-    return 0;
 }
 ```

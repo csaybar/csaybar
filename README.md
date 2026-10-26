@@ -1,20 +1,23 @@
 ```cpp
-#include <ranges>
-#include <limits>
+#include <generator>
+#include <memory>
+#include <type_traits>
 
-struct Her {
-    struct Light {} light;
-    struct Calm  {} calm;
-    struct Music {} music;
+struct Moment {
+    Moment() = default;
+    Moment(const Moment&) = delete;
 };
 
-static_assert(std::numeric_limits<double>::has_infinity);
+static_assert(!std::is_copy_constructible_v<Moment>);
+
+std::generator<const Moment&> after() {
+    for (;;) co_yield Moment{};
+}
 
 int main() {
-    auto [light, calm, music] = Her{};
+    auto then = std::make_unique<Moment>();
+    then.reset();
 
-    for (auto reason : std::views::iota(1)) {
-        ;
-    }
+    auto rest = after();
 }
 ```
